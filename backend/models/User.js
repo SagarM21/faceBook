@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const { ObjectId } = mongoose.Schema;
 
 const userSchema = mongoose.Schema(
@@ -22,6 +23,7 @@ const userSchema = mongoose.Schema(
 			text: true,
 			unique: true,
 		},
+
 		email: {
 			type: String,
 			required: [true, "email is required"],
@@ -34,7 +36,8 @@ const userSchema = mongoose.Schema(
 		picture: {
 			type: String,
 			trim: true,
-			default: "",
+			default:
+				"https://res.cloudinary.com/dmhcnhtng/image/upload/v1643044376/avatars/default_pic_jeaybr.png",
 		},
 		cover: {
 			type: String,
@@ -68,11 +71,11 @@ const userSchema = mongoose.Schema(
 			type: Array,
 			default: [],
 		},
-		followers: {
+		following: {
 			type: Array,
 			default: [],
 		},
-		following: {
+		followers: {
 			type: Array,
 			default: [],
 		},
@@ -88,7 +91,6 @@ const userSchema = mongoose.Schema(
 				},
 			},
 		],
-
 		details: {
 			bio: {
 				type: String,
@@ -122,7 +124,6 @@ const userSchema = mongoose.Schema(
 				type: String,
 			},
 		},
-
 		savedPosts: [
 			{
 				post: {
