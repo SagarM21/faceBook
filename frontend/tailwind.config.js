@@ -1,7 +1,30 @@
 module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				primary: "#fff",
+				secondary: "#f0f2f5",
+				third: "#e4e6eb",
+				forth: "#f0f2f5",
+				"color-primary": "#050505",
+				"color-secondary": "#65676b",
+				divider: "#ced0d4",
+				"dark-primary": "#18191a",
+				"dark-secondary": "#242526",
+				"dark-third": "#3a3b3c",
+				"dark-color-primary": "#242526",
+				"dark-color-secondary": "#b0b3b8",
+				"blue-color": "#1876f2",
+				"green-color": "#42b72a",
+				"light-blue-color": "#e7f3ff",
+				"border-color": "#ccced2",
+				"shadow-1": "rgba(0, 0, 0, 0.2)",
+				"shadow-2": "rgba(0, 0, 0, 0.1)",
+				"shadow-3": "rgba(0, 0, 0, 0.3)",
+				"shadow-inset": "rgba(255, 255, 255, 0.5)",
+			},
+		},
 	},
 	plugins: [],
 };
