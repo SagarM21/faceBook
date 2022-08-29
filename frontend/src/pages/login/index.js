@@ -64,14 +64,13 @@ export default function Login() {
 								)}
 							</Formik>
 							<Link to='/forgot' className='forgot_password'>
-								Forgotten password ?
+								Forgotten password?
 							</Link>
 							<div className='sign_splitter'></div>
 							<button className='blue_btn open_signup'>Create Account</button>
 						</div>
 						<Link to='/' className='sign_extra'>
-							<b>Create a Page</b>
-							for a celebrity, brand or business.
+							<b>Create a Page</b> for a celebrity, brand or business.
 						</Link>
 					</div>
 				</div>
