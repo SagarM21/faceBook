@@ -1,13 +1,12 @@
-import { useState } from "react";
 import { Formik, Form } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import LoginInput from "../../components/inputs/loginInput";
+import { useState } from "react";
 const loginInfos = {
 	email: "",
 	password: "",
 };
-
 export default function LoginForm() {
 	const [login, setLogin] = useState(loginInfos);
 	const { email, password } = login;
