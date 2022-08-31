@@ -216,6 +216,15 @@
 }
 /*----Footer------*/
 
+/*----error and success styles----*/
+.error_text{
+	color: #b94a48;
+}
+
+.error_success{
+	color: var(--green-color)
+}
+
 /*----dob and gender errors-----*/
 .reg_grid .input_error {
 	width: 300px;
