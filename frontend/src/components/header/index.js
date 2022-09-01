@@ -14,8 +14,11 @@ import {
 	Watch,
 } from "../../svg";
 import { useSelector } from "react-redux";
+import SearchMenu from "./SearchMenu";
+import { useState } from "react";
 
 export default function Header() {
+	const [showSearchMenu, setShowSearchMenu] = useState(false);
 	const { user } = useSelector((user) => ({ ...user })); //grabbing user info from redux
 	const color = "#65676b";
 	return (
@@ -27,7 +30,7 @@ export default function Header() {
 					</div>
 				</Link>
 
-				<div className='search search1'>
+				<div className='search search1' onClick={() => setShowSearchMenu(true)}>
 					<Search color={color} />
 					<input
 						type='text'
@@ -36,6 +39,9 @@ export default function Header() {
 					/>
 				</div>
 			</div>
+			{showSearchMenu && (
+				<SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} />
+			)}
 			<div className='header_middle'>
 				<Link to='/' className='middle_icon'>
 					<HomeActive color={color} />
