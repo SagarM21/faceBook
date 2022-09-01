@@ -1,16 +1,22 @@
 import "./style.css";
 import { Link } from "react-router-dom";
 import {
+	ArrowDown,
 	Friends,
 	Gaming,
 	HomeActive,
 	Logo,
 	Market,
+	Menu,
+	Messenger,
+	Notifications,
 	Search,
 	Watch,
 } from "../../svg";
+import { useSelector } from "react-redux";
 
 export default function Header() {
+	const { user } = useSelector((user) => ({ ...user })); //grabbing user info from redux
 	const color = "#65676b";
 	return (
 		<header>
@@ -48,7 +54,25 @@ export default function Header() {
 					<Gaming color={color} />
 				</Link>
 			</div>
-			<div className='header_right'></div>
+			<div className='header_right'>
+				<Link to='/profile' className='profile_link hover1'>
+					<img src={user?.picture} alt='' />
+					<span>{user?.first_name}</span>
+				</Link>
+				<div className='circle_icon hover1'>
+					<Menu />
+				</div>
+				<div className='circle_icon hover1'>
+					<Messenger />
+				</div>
+				<div className='circle_icon hover1'>
+					<Notifications />
+					<div className='right_notification'>5</div>
+				</div>
+				<div className='circle_icon hover1'>
+					<ArrowDown />
+				</div>
+			</div>
 		</header>
 	);
 }
