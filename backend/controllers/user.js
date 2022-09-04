@@ -92,9 +92,20 @@ exports.register = async (req, res) => {
 
 exports.activateAccount = async (req, res) => {
 	try {
+		const validUser = req.user.id;
 		const { token } = req.body;
 		const user = jwt.verify(token, process.env.TOKEN_SECRET);
 		const check = await User.findById(user.id);
+
+		if (validUser !== user.id) {
+			return res
+				.status(400)
+				.json({
+					message:
+						"You don't have the authorization to complete the operation.",
+				});
+		}
+
 		if (check.verified == true) {
 			return res
 				.status(400)
