@@ -140,3 +140,7 @@ exports.login = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
+
+exports.auth = async (req, res) => {
+	return res.send("Welcome from auth");
+};
