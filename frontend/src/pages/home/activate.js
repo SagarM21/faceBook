@@ -28,7 +28,7 @@ export default function Activate() {
 				{ token },
 				{
 					headers: {
-						Authorization: `Bearer ${token}`,
+						Authorization: `Bearer ${user.token}`,
 					},
 				}
 			);
