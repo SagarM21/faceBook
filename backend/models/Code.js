@@ -3,7 +3,7 @@ const { ObjectId } = mongoose.Schema;
 
 const codeSchema = new mongoose.Schema({
 	code: {
-		type: Number,
+		type: String,
 		required: true,
 	},
 	user: {

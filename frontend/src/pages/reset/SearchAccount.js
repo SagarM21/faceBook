@@ -33,6 +33,7 @@ export default function SearchAccount({
 			setUserInfos(data);
 			setVisible(1);
 			setError("");
+			setLoading(false)
 		} catch (error) {
 			setLoading(false);
 			setError(error.response.data.message);
