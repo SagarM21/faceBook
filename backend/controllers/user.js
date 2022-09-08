@@ -230,3 +230,19 @@ exports.validateResetCode = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
+
+exports.changePassword = async (req, res) => {
+	try {
+		const { email, password } = req.body;
+		const newPassword = await bcrypt.hash(password, 12);
+		await User.findOneAndUpdate(
+			{ email },
+			{
+				password: newPassword,
+			}
+		);
+		return res.status(200).json({ message: "Password updated successfully!" });
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
