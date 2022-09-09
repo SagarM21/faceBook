@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import "./style.css";
 import EmojiPickerBackground from "./EmojiPickerBackground";
 import AddToYourPost from "./AddToYourPost";
@@ -6,7 +6,8 @@ import ImagePreview from "./ImagePreview";
 
 export default function CreatePostPopup({ user }) {
 	const [text, setText] = useState("");
-	const [showPrev, setShowPrev] = useState(false);
+	const [showPrev, setShowPrev] = useState(true);
+	const [images, setImages] = useState([]);
 
 	// console.log(text);
 	return (
@@ -40,7 +41,13 @@ export default function CreatePostPopup({ user }) {
 						type2
 					/>
 				) : (
-					<ImagePreview text={text} user={user} setText={setText} />
+					<ImagePreview
+						text={text}
+						user={user}
+						setText={setText}
+						images={images}
+						setImages={setImages}
+					/>
 				)}
 				<AddToYourPost />
 				<button className='post_submit'>Post</button>
