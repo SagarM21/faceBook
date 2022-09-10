@@ -4,6 +4,7 @@
 - Account Activation
 - Forgot Password
 - Reset Password
+- Add/Upload Post in a grid manner
 
 ## Ways to start the app
 
