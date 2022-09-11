@@ -4,16 +4,27 @@ import Picker from "emoji-picker-react";
 import EmojiPickerBackground from "./EmojiPickerBackground";
 import AddToYourPost from "./AddToYourPost";
 import ImagePreview from "./ImagePreview";
-export default function CreatePostPopup({ user }) {
+import useClickOutside from "../../helpers/clickOutside";
+export default function CreatePostPopup({ user, setCreatePostVisible }) {
+	const popup = useRef(null);
 	const [text, setText] = useState("");
 	const [showPrev, setShowPrev] = useState(false);
 	const [images, setImages] = useState([]);
 	const [background, setBackground] = useState("");
+
+	useClickOutside(popup, () => {
+		setCreatePostVisible(false);
+	});
 	return (
 		<div className='blur'>
-			<div className='postBox'>
+			<div className='postBox' ref={popup}>
 				<div className='box_header'>
-					<div className='small_circle'>
+					<div
+						className='small_circle'
+						onClick={() => {
+							setCreatePostVisible((prev) => !prev);
+						}}
+					>
 						<i className='exit_icon'></i>
 					</div>
 					<span>Create Post</span>
