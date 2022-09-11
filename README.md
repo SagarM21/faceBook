@@ -10,7 +10,8 @@
 
 ## Ways to start the app
 
-`git clone https://github.com/SagarM21/faceBook.git`
+git clone https://github.com/SagarM21/faceBook.git
+
 cd backend
 run command - `npm run dev`
 
