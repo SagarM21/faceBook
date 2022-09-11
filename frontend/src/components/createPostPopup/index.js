@@ -49,18 +49,30 @@ export default function CreatePostPopup({ user, setCreatePostVisible }) {
 			const postImages = images.map((img) => {
 				return dataURItoBlob(img);
 			});
-			const path = `${user.username}/postImages`;
+			const path = `${user.username}/post Images`;
 			let formData = new FormData();
 			formData.append("path", path);
 			postImages.forEach((image) => {
 				formData.append("file", image);
 			});
 			const response = await uploadImages(formData, path, user.token);
-			await createPost(null, null, text, response, user.id, user.token);
+			const res = await createPost(
+				null,
+				null,
+				text,
+				response,
+				user.id,
+				user.token
+			);
 			setLoading(false);
-			setText("");
-			setImages("");
-			setCreatePostVisible(false);
+			// checking with ok because I have returned ok in createPost function
+			if (res === "ok") {
+				setText("");
+				setImages("");
+				setCreatePostVisible(false);
+			} else {
+				setError(res);
+			}
 		} else if (text) {
 			setLoading(true);
 			const response = await createPost(
@@ -131,6 +143,7 @@ export default function CreatePostPopup({ user, setCreatePostVisible }) {
 						showPrev={showPrev}
 						images={images}
 						setImages={setImages}
+						setError={setError}
 						setShowPrev={setShowPrev}
 					/>
 				)}

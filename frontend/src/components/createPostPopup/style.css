@@ -396,10 +396,15 @@
 	gap: 10px;
 	align-items: center;
 	justify-content: center;
-	z-index: 1;
+	z-index: 999;
 	color: #b94a48;
 	animation: anim 0.3s;
 	border-radius: 5px;
+	padding: 3rem;
+}
+.postError_error {
+	width: 75%;
+	font-weight: 600;
 }
 /*----post error----*/
 
