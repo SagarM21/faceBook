@@ -5,16 +5,38 @@ import EmojiPickerBackground from "./EmojiPickerBackground";
 import AddToYourPost from "./AddToYourPost";
 import ImagePreview from "./ImagePreview";
 import useClickOutside from "../../helpers/clickOutside";
+import { createPost } from "../../functions/post";
+import PulseLoader from "react-spinners/PulseLoader";
 export default function CreatePostPopup({ user, setCreatePostVisible }) {
 	const popup = useRef(null);
 	const [text, setText] = useState("");
 	const [showPrev, setShowPrev] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [images, setImages] = useState([]);
 	const [background, setBackground] = useState("");
 
 	useClickOutside(popup, () => {
 		setCreatePostVisible(false);
 	});
+
+	const postSubmit = async () => {
+		// when bg is selected
+		if (background) {
+			setLoading(true);
+			const res = await createPost(
+				null,
+				background,
+				text,
+				null,
+				user.id,
+				user.token
+			);
+			setLoading(false);
+			setBackground("");
+			setText("");
+			setCreatePostVisible(false);
+		}
+	};
 	return (
 		<div className='blur'>
 			<div className='postBox' ref={popup}>
@@ -66,7 +88,15 @@ export default function CreatePostPopup({ user, setCreatePostVisible }) {
 					/>
 				)}
 				<AddToYourPost setShowPrev={setShowPrev} />
-				<button className='post_submit'>Post</button>
+				<button
+					className='post_submit'
+					onClick={() => {
+						postSubmit();
+					}}
+					disabled={loading}
+				>
+					{loading ? <PulseLoader color='#fff' size={5} /> : "Post"}
+				</button>
 			</div>
 		</div>
 	);
