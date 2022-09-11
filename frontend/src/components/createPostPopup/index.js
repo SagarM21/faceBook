@@ -1,15 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./style.css";
+import Picker from "emoji-picker-react";
 import EmojiPickerBackground from "./EmojiPickerBackground";
 import AddToYourPost from "./AddToYourPost";
 import ImagePreview from "./ImagePreview";
-
 export default function CreatePostPopup({ user }) {
 	const [text, setText] = useState("");
 	const [showPrev, setShowPrev] = useState(false);
 	const [images, setImages] = useState([]);
-
-	// console.log(text);
+	const [background, setBackground] = useState("");
 	return (
 		<div className='blur'>
 			<div className='postBox'>
@@ -20,10 +19,10 @@ export default function CreatePostPopup({ user }) {
 					<span>Create Post</span>
 				</div>
 				<div className='box_profile'>
-					<img src={user?.picture} alt='' className='box_profile_img' />
+					<img src={user.picture} alt='' className='box_profile_img' />
 					<div className='box_col'>
 						<div className='box_profile_name'>
-							{user?.first_name} {user?.last_name}
+							{user.first_name} {user.last_name}
 						</div>
 						<div className='box_privacy'>
 							<img src='../../../icons/public.png' alt='' />
@@ -34,17 +33,22 @@ export default function CreatePostPopup({ user }) {
 				</div>
 
 				{!showPrev ? (
-					<EmojiPickerBackground
-						text={text}
-						user={user}
-						setText={setText}
-						type2
-					/>
+					<>
+						<EmojiPickerBackground
+							text={text}
+							user={user}
+							setText={setText}
+							showPrev={showPrev}
+							setBackground={setBackground}
+							background={background}
+						/>
+					</>
 				) : (
 					<ImagePreview
 						text={text}
 						user={user}
 						setText={setText}
+						showPrev={showPrev}
 						images={images}
 						setImages={setImages}
 						setShowPrev={setShowPrev}
