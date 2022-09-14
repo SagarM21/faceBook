@@ -122,7 +122,7 @@ export default function ImagePreview({
 					<div className='add_circle'>
 						<i className='phone_icon'></i>
 					</div>
-					<div className='mobile_text'>Add phots from your mobile device.</div>
+					<div className='mobile_text'>Add photos from your mobile device.</div>
 					<span className='addphone_btn'>Add</span>
 				</div>
 			</div>
