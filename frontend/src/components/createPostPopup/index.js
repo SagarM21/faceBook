@@ -93,6 +93,7 @@ export default function CreatePostPopup({ user, setCreatePostVisible }) {
 				setError(response);
 			}
 		} else {
+			console.log("nothing");
 		}
 	};
 	return (
