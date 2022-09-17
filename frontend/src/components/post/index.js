@@ -15,11 +15,11 @@ export default function Post({ post }) {
 						<div className='post_profile_name'>
 							{post.user.first_name} {post.user.last_name}
 							<div className='updated_p'>
-								{post.type == "profilePicture" &&
+								{post.type === "profilePicture" &&
 									`updated ${
 										post.user.gender === "male" ? "his" : "her"
 									} profile picture`}
-								{post.type == "cover" &&
+								{post.type === "cover" &&
 									`updated ${
 										post.user.gender === "male" ? "his" : "her"
 									} cover picture`}
