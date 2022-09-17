@@ -10,6 +10,7 @@ module.exports = async function (req, res, next) {
 		files.forEach((file) => {
 			if (
 				file.mimetype !== "image/jpeg" &&
+				file.mimetype !== "image/jpg" &&
 				file.mimetype !== "image/png" &&
 				file.mimetype !== "image/gif" &&
 				file.mimetype !== "image/webp"
