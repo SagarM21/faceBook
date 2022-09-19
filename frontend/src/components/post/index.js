@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import Moment from "react-moment";
 import { Dots, Public } from "../../svg";
-import ReactsPopup from "./ReactPopup";
+import ReactPopup from "./ReactPopup";
 import { useState } from "react";
-export default function Post({ post }) {
+import CreateComment from "./CreateComment";
+export default function Post({ post, user }) {
 	const [visible, setVisible] = useState(false);
 
 	return (
@@ -19,11 +20,11 @@ export default function Post({ post }) {
 						<div className='post_profile_name'>
 							{post.user.first_name} {post.user.last_name}
 							<div className='updated_p'>
-								{post.type === "profilePicture" &&
+								{post.type == "profilePicture" &&
 									`updated ${
 										post.user.gender === "male" ? "his" : "her"
 									} profile picture`}
-								{post.type === "cover" &&
+								{post.type == "cover" &&
 									`updated ${
 										post.user.gender === "male" ? "his" : "her"
 									} cover picture`}
@@ -77,7 +78,6 @@ export default function Post({ post }) {
 					)}
 				</>
 			)}
-
 			<div className='post_infos'>
 				<div className='reacts_count'>
 					<div className='reacts_count_imgs'></div>
@@ -89,7 +89,7 @@ export default function Post({ post }) {
 				</div>
 			</div>
 			<div className='post_actions'>
-				<ReactsPopup visible={visible} setVisible={setVisible} />
+				<ReactPopup visible={visible} setVisible={setVisible} />
 				<div
 					className='post_action hover1'
 					onMouseOver={() => {
@@ -114,6 +114,10 @@ export default function Post({ post }) {
 					<i className='share_icon'></i>
 					<span>Share</span>
 				</div>
+			</div>
+			<div className='comments_wrap'>
+				<div className='comments_order'></div>
+				<CreateComment user={user} />
 			</div>
 		</div>
 	);
