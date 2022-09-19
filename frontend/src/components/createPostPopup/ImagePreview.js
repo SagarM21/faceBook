@@ -16,7 +16,6 @@ export default function ImagePreview({
 		files.forEach((img) => {
 			if (
 				img !== "image/jpeg" &&
-				img !== "image/jpg" &&
 				img !== "image/png" &&
 				img !== "image/webp" &&
 				img !== "image/gif"
