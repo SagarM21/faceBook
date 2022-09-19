@@ -14,27 +14,29 @@ export default function ImagePreview({
 	const handleImages = (e) => {
 		let files = Array.from(e.target.files);
 		files.forEach((img) => {
+			console.log(img);
 			if (
-				img !== "image/jpeg" &&
-				img !== "image/png" &&
-				img !== "image/webp" &&
-				img !== "image/gif"
+				img.type !== "image/jpeg" &&
+				img.type !== "image/png" &&
+				img.type !== "image/webp" &&
+				img.type !== "image/gif"
 			) {
 				setError(
-					`${img.name} format is unsupported | Only jpeg, png, webp, gif are allowed.`
+					`${img.name} format is unsupported ! only Jpeg, Png, Webp, Gif are allowed.`
 				);
 				files = files.filter((item) => item.name !== img.name);
 				return;
 			} else if (img.size > 1024 * 1024 * 5) {
-				setError(`${img.name} size is too large, max 5mb allowed.`);
+				setError(`${img.name} size is too large max 5mb allowed.`);
 				files = files.filter((item) => item.name !== img.name);
 				return;
+			} else {
+				const reader = new FileReader();
+				reader.readAsDataURL(img);
+				reader.onload = (readerEvent) => {
+					setImages((images) => [...images, readerEvent.target.result]);
+				};
 			}
-			const reader = new FileReader();
-			reader.readAsDataURL(img);
-			reader.onload = (readerEvent) => {
-				setImages((images) => [...images, readerEvent.target.result]);
-			};
 		});
 	};
 	return (
@@ -43,7 +45,7 @@ export default function ImagePreview({
 			<div className='add_pics_wrap'>
 				<input
 					type='file'
-					accept='image/jpeg, image/png, image/webp, image/gif'
+					accept='image/jpeg,image/png,image/webp,image/gif'
 					multiple
 					hidden
 					ref={imageInputRef}
@@ -56,7 +58,6 @@ export default function ImagePreview({
 								<i className='edit_icon'></i>
 								Edit
 							</button>
-
 							<button
 								className='hover1'
 								onClick={() => {
@@ -67,10 +68,14 @@ export default function ImagePreview({
 								Add Photos/Videos
 							</button>
 						</div>
-						<div className='small_white_circle' onClick={() => setImages([])}>
+						<div
+							className='small_white_circle'
+							onClick={() => {
+								setImages([]);
+							}}
+						>
 							<i className='exit_icon'></i>
 						</div>
-
 						<div
 							className={
 								images.length === 1
@@ -80,7 +85,7 @@ export default function ImagePreview({
 									: images.length === 3
 									? "preview3"
 									: images.length === 4
-									? "preview4"
+									? "preview4 "
 									: images.length === 5
 									? "preview5"
 									: images.length % 2 === 0
@@ -88,7 +93,6 @@ export default function ImagePreview({
 									: "preview6 singular_grid"
 							}
 						>
-							{/* MAP THROUGH IMAGES */}
 							{images.map((img, i) => (
 								<img src={img} key={i} alt='' />
 							))}
@@ -122,7 +126,7 @@ export default function ImagePreview({
 					<div className='add_circle'>
 						<i className='phone_icon'></i>
 					</div>
-					<div className='mobile_text'>Add photos from your mobile device.</div>
+					<div className='mobile_text'>Add phots from your mobile device.</div>
 					<span className='addphone_btn'>Add</span>
 				</div>
 			</div>
