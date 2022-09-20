@@ -5,6 +5,7 @@
 - Forgot Password
 - Reset Password
 - Add/Upload Post in a grid manner
+- Like, Comment, Share functionality in post
 - Error handling
 - Uploading images to cloudinary
 
