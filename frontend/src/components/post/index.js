@@ -5,8 +5,11 @@ import { Dots, Public } from "../../svg";
 import ReactPopup from "./ReactPopup";
 import { useState } from "react";
 import CreateComment from "./CreateComment";
+import PostMenu from "./PostMenu";
+
 export default function Post({ post, user }) {
 	const [visible, setVisible] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 
 	return (
 		<div className='post'>
@@ -20,11 +23,11 @@ export default function Post({ post, user }) {
 						<div className='post_profile_name'>
 							{post.user.first_name} {post.user.last_name}
 							<div className='updated_p'>
-								{post.type === "profilePicture" &&
+								{post.type == "profilePicture" &&
 									`updated ${
 										post.user.gender === "male" ? "his" : "her"
 									} profile picture`}
-								{post.type === "cover" &&
+								{post.type == "cover" &&
 									`updated ${
 										post.user.gender === "male" ? "his" : "her"
 									} cover picture`}
@@ -38,7 +41,10 @@ export default function Post({ post, user }) {
 						</div>
 					</div>
 				</Link>
-				<div className='post_header_right hover1'>
+				<div
+					className='post_header_right hover1'
+					onClick={() => setShowMenu((prev) => !prev)}
+				>
 					<Dots color='#828387' />
 				</div>
 			</div>
@@ -119,6 +125,14 @@ export default function Post({ post, user }) {
 				<div className='comments_order'></div>
 				<CreateComment user={user} />
 			</div>
+			{showMenu && (
+				<PostMenu
+					userId={user.id}
+					postUserId={post.user._id}
+					imagesLength={post?.images?.length}
+					setShowMenu={setShowMenu}
+				/>
+			)}
 		</div>
 	);
 }
