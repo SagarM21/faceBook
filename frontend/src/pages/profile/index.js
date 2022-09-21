@@ -1,26 +1,24 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { profileReducer } from "../../functions/reducers";
 import Header from "../../components/header";
-
-const Profile = () => {
+import "./style.css";
+import Cover from "./Cover";
+export default function Profile() {
 	const { username } = useParams();
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => ({ ...state }));
 	var userName = username === undefined ? user.username : username;
 	const [{ loading, error, profile }, dispatch] = useReducer(profileReducer, {
 		loading: false,
-		profile: [],
+		profile: {},
 		error: "",
 	});
-
 	useEffect(() => {
 		getProfile();
 	}, [userName]);
-
 	const getProfile = async () => {
 		try {
 			dispatch({
@@ -49,12 +47,14 @@ const Profile = () => {
 			});
 		}
 	};
-	console.log(profile);
 	return (
-		<div>
+		<div className='profile'>
 			<Header page='profile' />
+			<div className='profile_top'>
+				<div className='profile_container'>
+					<Cover cover={profile.cover} />
+				</div>
+			</div>
 		</div>
 	);
-};
-
-export default Profile;
+}
