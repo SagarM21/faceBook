@@ -3,6 +3,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import CreatePostPopup from "./components/createPostPopup";
+import { postReducer } from "./functions/reducers";
 import Home from "./pages/home";
 import Activate from "./pages/home/activate";
 import Login from "./pages/login";
@@ -11,26 +12,10 @@ import Reset from "./pages/reset";
 import LoggedInRoute from "./routes/LoggedInRoute";
 import NotLoggedInRoute from "./routes/NotLoggedInRoute";
 
-function reducer(state, action) {
-	switch (action.type) {
-		case "POSTS_REQUEST":
-			return { ...state, loading: true, error: "" };
-
-		case "POSTS_SUCCESS":
-			return { ...state, loading: false, posts: action.payload, error: "" };
-
-		case "POSTS_ERROR":
-			return { ...state, loading: false, error: action.payload };
-
-		default:
-			return state;
-	}
-}
-
 const App = () => {
 	const [createPostVisible, setCreatePostVisible] = useState(false);
 	const { user } = useSelector((state) => ({ ...state }));
-	const [{ loading, error, posts }, dispatch] = useReducer(reducer, {
+	const [{ loading, error, posts }, dispatch] = useReducer(postReducer, {
 		loading: false,
 		posts: [],
 		error: "",
@@ -64,7 +49,7 @@ const App = () => {
 			});
 		}
 	};
-	console.log(posts);
+	// console.log(posts);
 	return (
 		<div>
 			{createPostVisible && (
@@ -84,6 +69,7 @@ const App = () => {
 					/>
 					<Route path='/activate/:token' element={<Activate />} exact />
 					<Route path='/profile' element={<Profile />} exact />
+					<Route path='/profile/:username' element={<Profile />} exact />
 				</Route>
 				<Route element={<NotLoggedInRoute />}>
 					<Route path='/login' element={<Login />} exact />
