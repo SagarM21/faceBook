@@ -4,6 +4,7 @@ import { useReducer } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { profileReducer } from "../../functions/reducers";
+import Header from "../../components/header";
 
 const Profile = () => {
 	const { username } = useParams();
@@ -49,7 +50,11 @@ const Profile = () => {
 		}
 	};
 	console.log(profile);
-	return <div>Profile</div>;
+	return (
+		<div>
+			<Header page='profile' />
+		</div>
+	);
 };
 
 export default Profile;
