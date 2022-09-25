@@ -8,6 +8,8 @@
 - Like, Comment, Share functionality in post
 - Error handling
 - Uploading images to cloudinary
+- Profile section for users where they can see/update their images, and the posts they have made it till now.
+- Used react-easy-crop package for selecting the image and cropping it nicely.
 
 ## Ways to start the app
 
