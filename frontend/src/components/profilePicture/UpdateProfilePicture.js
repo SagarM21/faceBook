@@ -10,7 +10,6 @@ export default function UpdateProfilePicture({ setImage, image }) {
 	const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
 		console.log(croppedArea, croppedAreaPixels);
 	}, []);
-
 	const zoomIn = () => {
 		slider.current.stepUp();
 		setZoom(slider.current.value);
@@ -19,7 +18,7 @@ export default function UpdateProfilePicture({ setImage, image }) {
 		slider.current.stepDown();
 		setZoom(slider.current.value);
 	};
-
+	// console.log(zoom);
 	return (
 		<div className='postBox update_img'>
 			<div className='box_header'>
@@ -30,9 +29,9 @@ export default function UpdateProfilePicture({ setImage, image }) {
 			</div>
 			<div className='update_image_desc'>
 				<textarea
+					placeholder='Description'
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
-					placeholder='Description'
 					className='textarea_blue details_input'
 				></textarea>
 			</div>
@@ -78,7 +77,6 @@ export default function UpdateProfilePicture({ setImage, image }) {
 					Make Temporary
 				</div>
 			</div>
-
 			<div className='flex_p_t'>
 				<i className='public_icon'></i>
 				Your profile picture is public
