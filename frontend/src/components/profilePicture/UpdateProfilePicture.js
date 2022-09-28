@@ -1,14 +1,21 @@
+import axios from "axios";
 import { useCallback, useRef, useState } from "react";
 import Cropper from "react-easy-crop";
+import { useSelector } from "react-redux";
+import { createPost } from "../../functions/post";
+import { uploadImages } from "../../functions/uploadImages";
+import { updateprofilePicture } from "../../functions/user";
+import getCroppedImg from "../../helpers/getCroppedImg";
 
-export default function UpdateProfilePicture({ setImage, image }) {
+export default function UpdateProfilePicture({ setImage, image, setError }) {
 	const [description, setDescription] = useState("");
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
+	const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 	const slider = useRef(null);
-
+	const { user } = useSelector((state) => ({ ...state }));
 	const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-		console.log(croppedArea, croppedAreaPixels);
+		setCroppedAreaPixels(croppedAreaPixels);
 	}, []);
 	const zoomIn = () => {
 		slider.current.stepUp();
@@ -18,7 +25,62 @@ export default function UpdateProfilePicture({ setImage, image }) {
 		slider.current.stepDown();
 		setZoom(slider.current.value);
 	};
-	// console.log(zoom);
+	const getCroppedImage = useCallback(
+		async (show) => {
+			try {
+				const img = await getCroppedImg(image, croppedAreaPixels);
+				if (show) {
+					setZoom(1);
+					setCrop({ x: 0, y: 0 });
+					setImage(img);
+					console.log("just show");
+				} else {
+					console.log("not show");
+					console.log(img);
+
+					return img;
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		[croppedAreaPixels]
+	);
+
+	const updateProfilePicture = async () => {
+		try {
+			let img = await getCroppedImage();
+			let blob = await fetch(img).then((b) => b.blob());
+			const path = `${user.username}/profile_pictures`;
+			let formData = new FormData();
+			formData.append("file", blob);
+			formData.append("path", path);
+			const res = await uploadImages(formData, path, user.token);
+			const updated_picture = await updateprofilePicture(
+				res[0].url,
+				user.token
+			);
+			console.log(updated_picture);
+			if (updated_picture === "ok") {
+				const new_post = await createPost(
+					"profilePicture",
+					null,
+					description,
+					res,
+					user.id,
+					user.token
+				);
+				if (new_post === "ok") {
+				} else {
+					setError(new_post);
+				}
+			} else {
+				setError(updated_picture);
+			}
+		} catch (error) {
+			setError(error.response.data.message);
+		}
+	};
 	return (
 		<div className='postBox update_img'>
 			<div className='box_header'>
@@ -35,8 +97,9 @@ export default function UpdateProfilePicture({ setImage, image }) {
 					className='textarea_blue details_input'
 				></textarea>
 			</div>
+
 			<div className='update_center'>
-				<div className='cropper'>
+				<div className='crooper'>
 					<Cropper
 						image={image}
 						crop={crop}
@@ -68,13 +131,11 @@ export default function UpdateProfilePicture({ setImage, image }) {
 				</div>
 			</div>
 			<div className='flex_up'>
-				<div className='gray_btn'>
-					<i className='crop_icon'></i>
-					Crop photo
+				<div className='gray_btn' onClick={() => getCroppedImage("show")}>
+					<i className='crop_icon'></i>Crop photo
 				</div>
 				<div className='gray_btn'>
-					<i className='temp_icon'></i>
-					Make Temporary
+					<i className='temp_icon'></i>Make Temporary
 				</div>
 			</div>
 			<div className='flex_p_t'>
@@ -83,7 +144,9 @@ export default function UpdateProfilePicture({ setImage, image }) {
 			</div>
 			<div className='update_submit_wrap'>
 				<div className='blue_link'>Cancel</div>
-				<button className='blue_btn'>Save</button>
+				<button className='blue_btn' onClick={() => updateProfilePicture()}>
+					Save
+				</button>
 			</div>
 		</div>
 	);
