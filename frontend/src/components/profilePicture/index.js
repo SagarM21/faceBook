@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 import "./style.css";
 import UpdateProfilePicture from "./UpdateProfilePicture";
+import useOnClickOutside from "../../helpers/clickOutside";
+import useClickOutside from "../../helpers/clickOutside";
 export default function ProfilePicture({ setShow, username, pRef }) {
+	const popup = useRef(null);
+	useClickOutside(popup, () => setShow(false));
 	const refInput = useRef(null);
 	const [image, setImage] = useState("");
 	const [error, setError] = useState("");
@@ -37,7 +41,7 @@ export default function ProfilePicture({ setShow, username, pRef }) {
 				accept='image/jpeg, image/png, image/webp, image/gif'
 			/>
 
-			<div className='postBox pictureBox'>
+			<div className='postBox pictureBox' ref={popup}>
 				<div className='box_header'>
 					<div className='small_circle' onClick={() => setShow(false)}>
 						<i className='exit_icon'></i>

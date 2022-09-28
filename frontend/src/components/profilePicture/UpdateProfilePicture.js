@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useCallback, useRef, useState } from "react";
 import Cropper from "react-easy-crop";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../functions/post";
 import { uploadImages } from "../../functions/uploadImages";
 import { updateprofilePicture } from "../../functions/user";
 import getCroppedImg from "../../helpers/getCroppedImg";
 import PulseLoader from "react-spinners/PulseLoader";
+import Cookies from "js-cookie";
 
 export default function UpdateProfilePicture({
 	setImage,
@@ -15,6 +16,7 @@ export default function UpdateProfilePicture({
 	setShow,
 	pRef,
 }) {
+	const dispatch = useDispatch();
 	const [description, setDescription] = useState("");
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
@@ -83,6 +85,17 @@ export default function UpdateProfilePicture({
 					setLoading(false);
 					setImage("");
 					pRef.current.style.backgroundImage = `url(${res[0].url})`;
+					Cookies.set(
+						"user",
+						JSON.stringify({
+							...user,
+							picture: res[0].url,
+						})
+					);
+					dispatch({
+						type: "UPDATE_PICTURE",
+						payload: res[0].url,
+					});
 					setShow(false);
 				} else {
 					setLoading(false);

@@ -11,6 +11,8 @@ export const userReducer = (
 			return null;
 		case "VERIFY":
 			return { ...state, verified: action.payload };
+		case "UPDATE_PICTURE":
+			return { ...state, picture: action.payload };
 		default:
 			return state;
 	}
