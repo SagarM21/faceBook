@@ -8,7 +8,6 @@ import { updateprofilePicture } from "../../functions/user";
 import getCroppedImg from "../../helpers/getCroppedImg";
 import PulseLoader from "react-spinners/PulseLoader";
 import Cookies from "js-cookie";
-
 export default function UpdateProfilePicture({
 	setImage,
 	image,
@@ -20,10 +19,10 @@ export default function UpdateProfilePicture({
 	const [description, setDescription] = useState("");
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
-	const [loading, setLoading] = useState(false);
 	const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 	const slider = useRef(null);
 	const { user } = useSelector((state) => ({ ...state }));
+	const [loading, setLoading] = useState(false);
 	const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
 		setCroppedAreaPixels(croppedAreaPixels);
 	}, []);
@@ -43,11 +42,7 @@ export default function UpdateProfilePicture({
 					setZoom(1);
 					setCrop({ x: 0, y: 0 });
 					setImage(img);
-					// console.log("just show");
 				} else {
-					// console.log("not show");
-					// console.log(img);
-
 					return img;
 				}
 			} catch (error) {
@@ -56,7 +51,6 @@ export default function UpdateProfilePicture({
 		},
 		[croppedAreaPixels]
 	);
-
 	const updateProfilePicture = async () => {
 		try {
 			setLoading(true);
@@ -71,7 +65,6 @@ export default function UpdateProfilePicture({
 				res[0].url,
 				user.token
 			);
-			// console.log(updated_picture);
 			if (updated_picture === "ok") {
 				const new_post = await createPost(
 					"profilePicture",
@@ -128,7 +121,7 @@ export default function UpdateProfilePicture({
 			</div>
 
 			<div className='update_center'>
-				<div className='crooper'>
+				<div className='cropper'>
 					<Cropper
 						image={image}
 						crop={crop}
@@ -141,6 +134,7 @@ export default function UpdateProfilePicture({
 						showGrid={false}
 					/>
 				</div>
+
 				<div className='slider'>
 					<div className='slider_circle hover1' onClick={() => zoomOut()}>
 						<i className='minus_icon'></i>
@@ -177,8 +171,8 @@ export default function UpdateProfilePicture({
 				</div>
 				<button
 					className='blue_btn'
-					onClick={() => updateProfilePicture()}
 					disabled={loading}
+					onClick={() => updateProfilePicture()}
 				>
 					{loading ? <PulseLoader color='#fff' size={5} /> : "Save"}
 				</button>
