@@ -83,7 +83,11 @@ export default function Profile({ setCreatePostVisible }) {
 			<Header page='profile' />
 			<div className='profile_top'>
 				<div className='profile_container'>
-					<Cover cover={profile.cover} visitor={visitor} />
+					<Cover
+						cover={profile.cover}
+						visitor={visitor}
+						photos={photos.resources}
+					/>
 					<ProfilePictureInfos
 						profile={profile}
 						visitor={visitor}

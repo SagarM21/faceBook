@@ -82,7 +82,7 @@
 }
 .profile_w_img {
 	position: relative;
-	z-index: 1;
+	z-index: 9999;
 }
 .profile_w_bg {
 	width: 180px;
@@ -326,15 +326,18 @@
 	border-radius: 10px;
 }
 .cover_cropper {
+	height: 100%;
+}
+.cover_cropper img {
 	object-fit: cover;
 	width: 100%;
 }
 .cover_cropper .reactEasyCrop_Container {
-	border-bottom-left-radius: 8px;
 	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
 }
 .save_changes_cover {
-	z-index: 9999999;
+	z-index: 999999999;
 	position: fixed;
 	left: 0;
 	display: flex;
@@ -366,11 +369,34 @@
 }
 .save_changes_right button:first-of-type {
 	width: 100px;
-	background: #393939;
+	background: #39393f;
 }
 .save_changes_right button:last-of-type {
 	width: 160px;
 }
+.selectCoverBox {
+	width: 570px !important;
+	max-width: 80vw;
+}
+.selectCoverBox_links {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	padding: 5px 15px;
+}
+.selectCoverBox_link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+	font-size: 14px;
+	padding: 5px 0 10px 0;
+	cursor: pointer;
+}
+.selectCoverBox_link:first-of-type {
+	color: var(--blue-color);
+	border-bottom: 3px solid var(--blue-color);
+}
+
 /*-----profile card--------*/
 @media (max-width: 900px) {
 	.profile_w_left {
