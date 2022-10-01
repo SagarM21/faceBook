@@ -95,7 +95,9 @@ export default function Post({ post, user, profile }) {
 					/>
 				</div>
 			) : (
-				<div className='post_cover_wrap'></div>
+				<div className='post_cover_wrap'>
+					<img src={post.images[0].url} alt='' />
+				</div>
 			)}
 			<div className='post_infos'>
 				<div className='reacts_count'>
