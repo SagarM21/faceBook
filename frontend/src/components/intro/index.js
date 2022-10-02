@@ -1,32 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Bio from "./Bio";
 import "./style.css";
-export default function Intro({ details, visitor }) {
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+export default function Intro({ detailss, visitor }) {
+	const { user } = useSelector((state) => ({ ...state }));
+	const [details, setDetails] = useState();
+	useEffect(() => {
+		setDetails(detailss);
+	}, [detailss]);
 	const initial = {
-		bio: details?.bio ? details.bio : "Under Construction",
+		bio: details?.bio ? details.bio : "",
 		othername: details?.othername ? details.othername : "",
 		job: details?.job ? details.job : "",
-		workplace: details?.workplace ? details.workplace : "Google",
-		highSchool: details?.highSchool ? details.highSchool : "some high school",
-		college: details?.college ? details.college : "some college",
-		currentCity: details?.currentCity ? details.currentCity : "Tanger",
-		hometown: details?.hometown ? details.hometown : "Morocco",
-		relationship: details?.relationship ? details.relationship : "Single",
-		instagram: details?.instagram ? details.instagram : "snehal",
+		workplace: details?.workplace ? details.workplace : "",
+		highSchool: details?.highSchool ? details.highSchool : "",
+		college: details?.college ? details.college : "",
+		currentCity: details?.currentCity ? details.currentCity : "",
+		hometown: details?.hometown ? details.hometown : "",
+		relationship: details?.relationship ? details.relationship : "",
+		instagram: details?.instagram ? details.instagram : "",
 	};
 	const [infos, setInfos] = useState(initial);
-	const [showBio, setShowBio] = useState(true);
+	const [showBio, setShowBio] = useState(false);
 	const [max, setMax] = useState(infos?.bio ? 100 - infos?.bio.length : 100);
 	const handleBioChange = (e) => {
 		setInfos({ ...infos, bio: e.target.value });
 		setMax(100 - e.target.value.length);
 	};
+	const updateDetails = async () => {
+		try {
+			console.log("sent");
+			const { data } = await axios.put(
+				`${process.env.REACT_APP_BACKEND_URL}/updateDetails`,
+				{
+					infos,
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${user.token}`,
+					},
+				}
+			);
+			setShowBio(false);
+			setDetails(data);
+		} catch (error) {
+			console.log(error.response.data.message);
+		}
+	};
+	console.log(details);
 	return (
 		<div className='profile_card'>
 			<div className='profile_card_header'>Intro</div>
-			{infos?.bio && !showBio && (
+			{details?.bio && !showBio && (
 				<div className='info_col'>
-					<span className='info_text'>{infos.bio}</span>
+					<span className='info_text'>{details?.bio}</span>
 					{!visitor && (
 						<button
 							className='gray_btn hover1'
@@ -43,65 +72,66 @@ export default function Intro({ details, visitor }) {
 					max={max}
 					handleBioChange={handleBioChange}
 					setShowBio={setShowBio}
+					updateDetails={updateDetails}
 				/>
 			)}
-			{infos.job && infos.workplace ? (
+			{details?.job && details?.workplace ? (
 				<div className='info_profile'>
 					<img src='../../../icons/job.png' alt='' />
-					works as {infos.job} at <b>{infos.workplace}</b>
+					works as {details?.job} at <b>{details?.workplace}</b>
 				</div>
-			) : infos.job && !infos.workplace ? (
+			) : details?.job && !details?.workplace ? (
 				<div className='info_profile'>
 					<img src='../../../icons/job.png' alt='' />
-					works as {infos.job}
+					works as {details?.job}
 				</div>
 			) : (
-				infos.workplace &&
-				!infos.job && (
+				details?.workplace &&
+				!details?.job && (
 					<div className='info_profile'>
 						<img src='../../../icons/job.png' alt='' />
-						works at {infos.workplace}
+						works at {details?.workplace}
 					</div>
 				)
 			)}
-			{infos?.relationship && (
+			{details?.relationship && (
 				<div className='info_profile'>
 					<img src='../../../icons/relationship.png' alt='' />
-					{infos.relationship}
+					{details?.relationship}
 				</div>
 			)}
-			{infos?.college && (
+			{details?.college && (
 				<div className='info_profile'>
 					<img src='../../../icons/studies.png' alt='' />
-					studied at {infos.college}
+					studied at {details?.college}
 				</div>
 			)}
-			{infos?.highSchool && (
+			{details?.highSchool && (
 				<div className='info_profile'>
 					<img src='../../../icons/studies.png' alt='' />
-					studied at {infos.highSchool}
+					studied at {details?.highSchool}
 				</div>
 			)}
-			{infos?.currentCity && (
+			{details?.currentCity && (
 				<div className='info_profile'>
 					<img src='../../../icons/home.png' alt='' />
-					Lives in {infos.currentCity}
+					Lives in {details?.currentCity}
 				</div>
 			)}
-			{infos?.hometown && (
+			{details?.hometown && (
 				<div className='info_profile'>
 					<img src='../../../icons/home.png' alt='' />
-					From {infos.hometown}
+					From {details?.hometown}
 				</div>
 			)}
-			{infos?.hometown && (
+			{details?.hometown && (
 				<div className='info_profile'>
 					<img src='../../../icons/instagram.png' alt='' />
 					<a
-						href={`https://www.instagram.com/${infos.instagram}`}
+						href={`https://www.instagram.com/${details?.instagram}`}
 						target='_blank'
 					>
-						{infos.instagram}
+						{details?.instagram}
 					</a>
 				</div>
 			)}
