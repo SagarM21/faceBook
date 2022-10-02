@@ -14,6 +14,7 @@ import GridPosts from "./GridPosts";
 import Post from "../../components/post/index";
 import Photos from "./Photos";
 import Friends from "./Friends";
+import Intro from "../../components/intro";
 export default function Profile({ setCreatePostVisible }) {
 	const { username } = useParams();
 	const navigate = useNavigate();
@@ -102,6 +103,7 @@ export default function Profile({ setCreatePostVisible }) {
 						<PplYouMayKnow />
 						<div className='profile_grid'>
 							<div className='profile_left'>
+								<Intro details={profile.details} />
 								<Photos
 									username={userName}
 									token={user.token}

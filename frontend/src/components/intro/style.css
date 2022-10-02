@@ -1,0 +1,11 @@
+.info_profile {
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 15px;
+	color: var(--color-primary);
+}
+.info_profile img {
+	filter: invert(40%);
+}
