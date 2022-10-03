@@ -443,3 +443,17 @@
 		bottom: 3rem;
 	}
 }
+.scrollFixed .profile_left {
+	position: fixed;
+	width: 360px;
+}
+.scrollFixed .profile_right {
+	margin-left: 370px;
+	width: 504px;
+}
+.showLess .profile_left {
+	bottom: 10px;
+}
+.showMore .profile_left {
+	top: 54px;
+}

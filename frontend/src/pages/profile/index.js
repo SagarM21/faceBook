@@ -3,6 +3,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { profileReducer } from "../../functions/reducers";
+import { useMediaQuery } from "react-responsive";
 import Header from "../../components/header";
 import "./style.css";
 import Cover from "./Cover";
@@ -15,6 +16,7 @@ import Post from "../../components/post/index";
 import Photos from "./Photos";
 import Friends from "./Friends";
 import Intro from "../../components/intro";
+import { useRef } from "react";
 export default function Profile({ setCreatePostVisible }) {
 	const { username } = useParams();
 	const navigate = useNavigate();
@@ -84,10 +86,30 @@ export default function Profile({ setCreatePostVisible }) {
 			});
 		}
 	};
+	
+	const profileTop = useRef(null);
+	const leftSide = useRef(null);
+	const [height, setHeight] = useState();
+	const [leftHeight, setLeftHeight] = useState();
+	const [scrollHeight, setScrollHeight] = useState();
+	useEffect(() => {
+		setHeight(profileTop.current.clientHeight + 300);
+		setLeftHeight(leftSide.current.clientHeight);
+		window.addEventListener("scroll", getScroll, { passive: true });
+		return () => {
+			window.addEventListener("scroll", getScroll, { passive: true });
+		};
+	}, [loading, scrollHeight]);
+	const check = useMediaQuery({
+		query: "(min-width:901px)",
+	});
+	const getScroll = () => {
+		setScrollHeight(window.pageYOffset);
+	};
 	return (
 		<div className='profile'>
 			<Header page='profile' />
-			<div className='profile_top'>
+			<div className='profile_top' ref={profileTop}>
 				<div className='profile_container'>
 					<Cover
 						cover={profile.cover}
@@ -107,8 +129,17 @@ export default function Profile({ setCreatePostVisible }) {
 				<div className='profile_container'>
 					<div className='bottom_container'>
 						<PplYouMayKnow />
-						<div className='profile_grid'>
-							<div className='profile_left'>
+						<div
+							className={`profile_grid ${
+								check && scrollHeight >= height && leftHeight > 1000
+									? "scrollFixed showLess"
+									: check &&
+									  scrollHeight >= height &&
+									  leftHeight < 1000 &&
+									  "scrollFixed showMore"
+							}`}
+						>
+							<div className='profile_left' ref={leftSide}>
 								<Intro
 									detailss={profile.details}
 									visitor={visitor}
