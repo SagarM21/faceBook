@@ -56,10 +56,12 @@
 }
 .infosBox {
 	height: 82vh;
-	width: 800px;
+	width: 800px !important;
 }
 .details_wrapper {
 	padding: 1rem;
+	overflow-y: auto;
+	height: 70vh;
 }
 .details_col {
 	display: flex;
@@ -97,4 +99,13 @@
 }
 .underline:hover {
 	text-decoration: underline;
+}
+.select_rel {
+	height: 30px;
+	outline: none;
+	border: none;
+	background: var(--bg-secondary);
+	margin: 10px 0;
+	padding: 0 10px;
+	border-radius: 5px;
 }

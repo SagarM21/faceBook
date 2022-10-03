@@ -30,7 +30,12 @@ export default function Profile({ setCreatePostVisible }) {
 	useEffect(() => {
 		getProfile();
 	}, [userName]);
+
+	useEffect(() => {
+		setOtherName(profile?.details?.otherName);
+	}, [profile]);
 	var visitor = userName === user.username ? false : true;
+	const [otherName, setOtherName] = useState();
 	// console.log(visitor);
 
 	const path = `${userName}/*`;
@@ -93,6 +98,7 @@ export default function Profile({ setCreatePostVisible }) {
 						profile={profile}
 						visitor={visitor}
 						photos={photos.resources}
+						otherName={otherName}
 					/>
 					<ProfileMenu />
 				</div>
@@ -103,7 +109,11 @@ export default function Profile({ setCreatePostVisible }) {
 						<PplYouMayKnow />
 						<div className='profile_grid'>
 							<div className='profile_left'>
-								<Intro detailss={profile.details} visitor={visitor} />
+								<Intro
+									detailss={profile.details}
+									visitor={visitor}
+									setOtherName={setOtherName}
+								/>
 								<Photos
 									username={userName}
 									token={user.token}
