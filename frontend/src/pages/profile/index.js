@@ -86,7 +86,6 @@ export default function Profile({ setCreatePostVisible }) {
 			});
 		}
 	};
-	
 	const profileTop = useRef(null);
 	const leftSide = useRef(null);
 	const [height, setHeight] = useState();
@@ -106,6 +105,8 @@ export default function Profile({ setCreatePostVisible }) {
 	const getScroll = () => {
 		setScrollHeight(window.pageYOffset);
 	};
+	console.log(profile);
+
 	return (
 		<div className='profile'>
 			<Header page='profile' />
