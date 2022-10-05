@@ -10,6 +10,7 @@ export default function ProfilePictureInfos({
 }) {
 	const [show, setShow] = useState(false);
 	const pRef = useRef(null);
+	console.log("PROFILE FRIENDSHIP", profile?.friendship);
 	return (
 		<div className='profile_img_wrap'>
 			{show && <ProfilePicture setShow={setShow} pRef={pRef} photos={photos} />}
@@ -44,7 +45,7 @@ export default function ProfilePictureInfos({
 			</div>
 
 			{visitor ? (
-				<Friendship friendship={profile?.friendship} />
+				<Friendship friendshipp={profile?.friendship} profileId={profile._id} />
 			) : (
 				<div className='profile_w_right'>
 					<div className='blue_btn'>

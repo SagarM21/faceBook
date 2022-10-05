@@ -261,6 +261,7 @@ exports.getProfile = async (req, res) => {
 			requestSent: false,
 			requestReceived: false,
 		};
+		// console.log("PROFILE ID", profile._id);
 		if (!profile) {
 			return res.json({ ok: false });
 		}
@@ -329,13 +330,11 @@ exports.updateDetails = async (req, res) => {
 };
 
 // FRIEND CONTROLLERS
-exports.addFriend = async () => {
+exports.addFriend = async (req, res) => {
 	try {
 		if (req.user.id !== req.params.id) {
 			const sender = await User.findById(req.user.id);
 			const receiver = await User.findById(req.params.id);
-
-			// checking if the sender has already sent the request
 			if (
 				!receiver.requests.includes(sender._id) &&
 				!receiver.friends.includes(sender._id)
@@ -347,7 +346,7 @@ exports.addFriend = async () => {
 					$push: { followers: sender._id },
 				});
 				await sender.updateOne({
-					$push: { following: sender._id },
+					$push: { following: receiver._id },
 				});
 				res.json({ message: "Friend request has been sent." });
 			} else {
@@ -365,13 +364,11 @@ exports.addFriend = async () => {
 	}
 };
 
-exports.cancelRequest = async () => {
+exports.cancelRequest = async (req, res) => {
 	try {
 		if (req.user.id !== req.params.id) {
 			const sender = await User.findById(req.user.id);
 			const receiver = await User.findById(req.params.id);
-
-			// checking if the sender has already sent the request
 			if (
 				receiver.requests.includes(sender._id) &&
 				!receiver.friends.includes(sender._id)
@@ -401,16 +398,14 @@ exports.cancelRequest = async () => {
 	}
 };
 
-exports.follow = async () => {
+exports.follow = async (req, res) => {
 	try {
 		if (req.user.id !== req.params.id) {
 			const sender = await User.findById(req.user.id);
 			const receiver = await User.findById(req.params.id);
-
-			// checking if the sender has already sent the request
 			if (
 				!receiver.followers.includes(sender._id) &&
-				!receiver.following.includes(receiver._id)
+				!sender.following.includes(receiver._id)
 			) {
 				await receiver.updateOne({
 					$push: { followers: sender._id },
@@ -423,19 +418,17 @@ exports.follow = async () => {
 				return res.status(400).json({ message: "You are already following." });
 			}
 		} else {
-			return res.status(400).json({ message: "You can't follow yourself." });
+			return res.status(400).json({ message: "You can't follow yourself" });
 		}
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
 };
-exports.unFollow = async () => {
+exports.unFollow = async (req, res) => {
 	try {
 		if (req.user.id !== req.params.id) {
 			const sender = await User.findById(req.user.id);
 			const receiver = await User.findById(req.params.id);
-
-			// checking if the sender has already sent the request
 			if (
 				receiver.followers.includes(sender._id) &&
 				sender.following.includes(receiver._id)
@@ -458,13 +451,11 @@ exports.unFollow = async () => {
 	}
 };
 
-exports.acceptRequest = async () => {
+exports.acceptRequest = async (req, res) => {
 	try {
 		if (req.user.id !== req.params.id) {
 			const receiver = await User.findById(req.user.id);
 			const sender = await User.findById(req.params.id);
-
-			// checking if the sender has already sent the request
 			if (receiver.requests.includes(sender._id)) {
 				await receiver.update({
 					$push: { friends: sender._id, following: sender._id },
@@ -491,12 +482,11 @@ exports.acceptRequest = async () => {
 	}
 };
 
-exports.unfriend = async () => {
+exports.unfriend = async (req, res) => {
 	try {
 		if (req.user.id !== req.params.id) {
 			const sender = await User.findById(req.user.id);
 			const receiver = await User.findById(req.params.id);
-
 			if (
 				receiver.friends.includes(sender._id) &&
 				sender.friends.includes(receiver._id)
@@ -530,12 +520,11 @@ exports.unfriend = async () => {
 	}
 };
 
-exports.deleteRequest = async () => {
+exports.deleteRequest = async (req, res) => {
 	try {
 		if (req.user.id !== req.params.id) {
 			const receiver = await User.findById(req.user.id);
 			const sender = await User.findById(req.params.id);
-
 			if (receiver.requests.includes(sender._id)) {
 				await receiver.update({
 					$pull: {
