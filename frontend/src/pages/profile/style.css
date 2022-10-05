@@ -236,6 +236,7 @@
 	color: var(--blue-color);
 }
 .profile_grid {
+	position: relative;
 	display: grid;
 	grid-template-columns: 1fr 1.4fr;
 	gap: 10px;
@@ -432,6 +433,9 @@
 	.bottom_container {
 		padding: 5px;
 	}
+	.friendship {
+		transform: translateY(-4rem);
+	}
 }
 @media (max-width: 650px) {
 	.profile_menu_wrap {
@@ -449,11 +453,20 @@
 }
 .scrollFixed .profile_right {
 	margin-left: 370px;
-	width: 504px;
+	width: 505px;
 }
 .showLess .profile_left {
 	bottom: 10px;
 }
 .showMore .profile_left {
 	top: 54px;
+}
+.friendship {
+	z-index: 9;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.friendship .blue_btn {
+	height: 35px;
 }
