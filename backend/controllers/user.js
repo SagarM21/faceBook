@@ -303,3 +303,166 @@ exports.updateDetails = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
+
+// FRIEND CONTROLLERS
+exports.addFriend = async () => {
+	try {
+		if (req.user.id !== req.params.id) {
+			const sender = await User.findById(req.user.id);
+			const receiver = await User.findById(req.params.id);
+
+			// checking if the sender has already sent the request
+			if (
+				!receiver.requests.includes(sender._id) &&
+				!receiver.friends.includes(sender._id)
+			) {
+				await receiver.updateOne({
+					$push: { requests: sender._id },
+				});
+				await receiver.updateOne({
+					$push: { followers: sender._id },
+				});
+				await sender.updateOne({
+					$push: { following: sender._id },
+				});
+				res.json({ message: "Friend request has been sent." });
+			} else {
+				return res
+					.status(400)
+					.json({ message: "Friend request already sent." });
+			}
+		} else {
+			return res
+				.status(400)
+				.json({ message: "You can't send request to yourself." });
+		}
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+
+exports.cancelRequest = async () => {
+	try {
+		if (req.user.id !== req.params.id) {
+			const sender = await User.findById(req.user.id);
+			const receiver = await User.findById(req.params.id);
+
+			// checking if the sender has already sent the request
+			if (
+				receiver.requests.includes(sender._id) &&
+				!receiver.friends.includes(sender._id)
+			) {
+				await receiver.updateOne({
+					$pull: { requests: sender._id },
+				});
+				await receiver.updateOne({
+					$pull: { followers: sender._id },
+				});
+				await sender.updateOne({
+					$pull: { following: sender._id },
+				});
+				res.json({ message: "Friend request has been cancelled." });
+			} else {
+				return res
+					.status(400)
+					.json({ message: "Friend request already cancelled." });
+			}
+		} else {
+			return res
+				.status(400)
+				.json({ message: "You can't cancel a request to yourself." });
+		}
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+
+exports.follow = async () => {
+	try {
+		if (req.user.id !== req.params.id) {
+			const sender = await User.findById(req.user.id);
+			const receiver = await User.findById(req.params.id);
+
+			// checking if the sender has already sent the request
+			if (
+				!receiver.followers.includes(sender._id) &&
+				!receiver.following.includes(receiver._id)
+			) {
+				await receiver.updateOne({
+					$push: { followers: sender._id },
+				});
+				await sender.updateOne({
+					$push: { following: receiver._id },
+				});
+				res.json({ message: "Followed successfully." });
+			} else {
+				return res.status(400).json({ message: "You are already following." });
+			}
+		} else {
+			return res.status(400).json({ message: "You can't follow yourself." });
+		}
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+exports.unFollow = async () => {
+	try {
+		if (req.user.id !== req.params.id) {
+			const sender = await User.findById(req.user.id);
+			const receiver = await User.findById(req.params.id);
+
+			// checking if the sender has already sent the request
+			if (
+				receiver.followers.includes(sender._id) &&
+				sender.following.includes(receiver._id)
+			) {
+				await receiver.updateOne({
+					$push: { followers: sender._id },
+				});
+				await sender.updateOne({
+					$pull: { following: receiver._id },
+				});
+				res.json({ message: "Unfollowed successfully." });
+			} else {
+				return res.status(400).json({ message: "You had already unfollowed." });
+			}
+		} else {
+			return res.status(400).json({ message: "You can't unfollow yourself." });
+		}
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+
+exports.acceptRequest = async () => {
+	try {
+		if (req.user.id !== req.params.id) {
+			const receiver = await User.findById(req.user.id);
+			const sender = await User.findById(req.params.id);
+
+			// checking if the sender has already sent the request
+			if (receiver.requests.includes(sender._id)) {
+				await receiver.update({
+					$push: { friends: sender._id, following: sender._id },
+				});
+				await sender.update({
+					$push: { friends: receiver._id, followers: receiver._id },
+				});
+				await receiver.updateOne({
+					$pull: { requests: sender._id },
+				});
+				res.json({ message: "Friend request accepted successfully." });
+			} else {
+				return res
+					.status(400)
+					.json({ message: "You have already accepted the friend request." });
+			}
+		} else {
+			return res
+				.status(400)
+				.json({ message: "You can't accept a friend request from yourself." });
+		}
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
