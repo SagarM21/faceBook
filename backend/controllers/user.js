@@ -400,6 +400,7 @@ exports.cancelRequest = async (req, res) => {
 
 exports.follow = async (req, res) => {
 	try {
+		// console.log("SENDER id", req.user.id);
 		if (req.user.id !== req.params.id) {
 			const sender = await User.findById(req.user.id);
 			const receiver = await User.findById(req.params.id);
@@ -434,7 +435,7 @@ exports.unFollow = async (req, res) => {
 				sender.following.includes(receiver._id)
 			) {
 				await receiver.updateOne({
-					$push: { followers: sender._id },
+					$pull: { followers: sender._id },
 				});
 				await sender.updateOne({
 					$pull: { following: receiver._id },

@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
+	acceptRequest,
 	addFriend,
 	cancelRequest,
+	deleteRequest,
 	follow,
 	unFollow,
+	unfriend,
 } from "../../functions/user";
 import useClickOutside from "../../helpers/clickOutside";
 
@@ -22,24 +25,54 @@ export default function Friendship({ friendshipp, profileId }) {
 	useClickOutside(menu1, () => setRespondMenu(false));
 
 	const { user } = useSelector((state) => ({ ...state }));
-    
+
 	const addFriendHandler = async () => {
 		setFriendship({ ...friendship, requestSent: true, following: true });
-		addFriend(profileId, user.token);
+		await addFriend(profileId, user.token);
 	};
 	const cancelRequestHandler = async () => {
 		setFriendship({ ...friendship, requestSent: false, following: false });
-		cancelRequest(profileId, user.token);
+		await cancelRequest(profileId, user.token);
 	};
 	const followHandler = async () => {
 		setFriendship({ ...friendship, following: true });
-		follow(profileId, user.token);
+		await follow(profileId, user.token);
 	};
 	const unFollowHandler = async () => {
 		setFriendship({ ...friendship, following: false });
-		unFollow(profileId, user.token);
+		await unFollow(profileId, user.token);
 	};
-	console.log(friendship?.requestReceived);
+	const acceptRequestHandler = async () => {
+		setFriendship({
+			...friendship,
+			friends: true,
+			following: true,
+			requestSent: false,
+			requestReceived: false,
+		});
+		await acceptRequest(profileId, user.token);
+	};
+	const unfriendHandler = async () => {
+		setFriendship({
+			...friendship,
+			friends: false,
+			following: false,
+			requestSent: false,
+			requestReceived: false,
+		});
+		await unfriend(profileId, user.token);
+	};
+	const deleteRequestHandler = async () => {
+		setFriendship({
+			...friendship,
+			friends: false,
+			following: false,
+			requestSent: false,
+			requestReceived: false,
+		});
+		await deleteRequest(profileId, user.token);
+	};
+	// console.log(friendship?.requestReceived);
 	return (
 		<div className='friendship'>
 			{friendship?.friends ? (
@@ -75,7 +108,10 @@ export default function Friendship({ friendshipp, profileId }) {
 									Follow
 								</div>
 							)}
-							<div className='open_cover_menu_item hover1'>
+							<div
+								className='open_cover_menu_item hover1'
+								onClick={() => unfriendHandler()}
+							>
 								<i className='unfriend_outlined_icon'></i>
 								Unfriend
 							</div>
@@ -109,8 +145,18 @@ export default function Friendship({ friendshipp, profileId }) {
 						</button>
 						{respondMenu && (
 							<div className='open_cover_menu' ref={menu1}>
-								<div className='open_cover_menu_item hover1'>Confirm</div>
-								<div className='open_cover_menu_item hover1'>Delete</div>
+								<div
+									className='open_cover_menu_item hover1'
+									onClick={() => acceptRequestHandler()}
+								>
+									Confirm
+								</div>
+								<div
+									className='open_cover_menu_item hover1'
+									onClick={() => deleteRequestHandler()}
+								>
+									Delete
+								</div>
 							</div>
 						)}
 					</div>

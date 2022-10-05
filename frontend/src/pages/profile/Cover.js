@@ -110,7 +110,7 @@ export default function Cover({ cover, visitor, photos }) {
 		} catch (error) {
 			setLoading(false);
 			// console.log(error.response.data.message);
-			setError(error.response.data.message);
+			setError(error.response?.data.message);
 		}
 	};
 	return (
