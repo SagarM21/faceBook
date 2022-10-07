@@ -11,6 +11,7 @@
 - Profile section for users where they can see/update their images, and the posts they have made it till now.
 - Displaying profile posts on /profile section as well as on home page
 - Used react-easy-crop package for selecting the image and cropping it nicely.
+- Add friend, follow, unfollow, cancel friend request, displaying friends
 
 ## Ways to start the app
 
@@ -23,6 +24,11 @@ OR
 
 cd frontend - `npm start`
 cd backend - `npm run server`
+
+### New way of creating styles
+
+![](c:/Users/ASUS/Downloads/ex.png)
+` style={{ transform: translateX(${-i * 7}px), zIndex:`${i}`, }} `
 
 ### Blogs that I preferred
 
