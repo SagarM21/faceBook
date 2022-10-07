@@ -27,7 +27,8 @@ cd backend - `npm run server`
 
 ### New way of creating styles
 
-![](c:/Users/ASUS/Downloads/ex.png)
+![ex](https://user-images.githubusercontent.com/72984307/194614410-e4e684c2-9852-4e01-a2cd-8be931d2439d.png)
+
 ` style={{ transform: translateX(${-i * 7}px), zIndex:`${i}`, }} `
 
 ### Blogs that I preferred
