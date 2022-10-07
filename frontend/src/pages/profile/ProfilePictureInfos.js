@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ProfilePicture from "../../components/profilePicture";
 import Friendship from "./Friendship";
 export default function ProfilePictureInfos({
@@ -10,7 +9,6 @@ export default function ProfilePictureInfos({
 }) {
 	const [show, setShow] = useState(false);
 	const pRef = useRef(null);
-	console.log("PROFILE FRIENDSHIP", profile?.friendship);
 	return (
 		<div className='profile_img_wrap'>
 			{show && <ProfilePicture setShow={setShow} pRef={pRef} photos={photos} />}
@@ -33,7 +31,6 @@ export default function ProfilePictureInfos({
 						</div>
 					)}
 				</div>
-
 				<div className='profile_w_col'>
 					<div className='profile_name'>
 						{profile.first_name} {profile.last_name}
@@ -43,18 +40,17 @@ export default function ProfilePictureInfos({
 					<div className='profile_friend_imgs'></div>
 				</div>
 			</div>
-
 			{visitor ? (
-				<Friendship friendshipp={profile?.friendship} profileId={profile._id} />
+				<Friendship friendshipp={profile?.friendship} profileid={profile._id} />
 			) : (
 				<div className='profile_w_right'>
 					<div className='blue_btn'>
 						<img src='../../../icons/plus.png' alt='' className='invert' />
-						<span>Add to Story</span>
+						<span>Add to story</span>
 					</div>
 					<div className='gray_btn'>
-						<img src='edit_icon' alt='' />
-						<span>Edit Profile</span>
+						<i className='edit_icon'></i>
+						<span>Edit profile</span>
 					</div>
 				</div>
 			)}

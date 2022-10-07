@@ -261,7 +261,6 @@ exports.getProfile = async (req, res) => {
 			requestSent: false,
 			requestReceived: false,
 		};
-		// console.log("PROFILE ID", profile._id);
 		if (!profile) {
 			return res.json({ ok: false });
 		}
@@ -285,6 +284,7 @@ exports.getProfile = async (req, res) => {
 		const posts = await Post.find({ user: profile._id })
 			.populate("user")
 			.sort({ createdAt: -1 });
+		await profile.populate("friends", "first_name last_name username picture");
 		res.json({ ...profile.toObject(), posts, friendship });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
