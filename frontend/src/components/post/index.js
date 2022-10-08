@@ -6,11 +6,25 @@ import ReactPopup from "./ReactPopup";
 import { useState } from "react";
 import CreateComment from "./CreateComment";
 import PostMenu from "./PostMenu";
+import { useEffect } from "react";
+import { getReacts } from "../../functions/post";
 
 export default function Post({ post, user, profile }) {
 	const [visible, setVisible] = useState(false);
 	const [showMenu, setShowMenu] = useState(false);
+	const [reacts, setReacts] = useState();
+	const [check, setCheck] = useState();
 
+	useEffect(() => {
+		getPostReacts();
+	}, [post]);
+	const getPostReacts = async () => {
+		const res = await getReacts(post._id, user.token);
+		setReacts(res.reacts);
+		setCheck(res.check);
+	};
+	// console.log("REACTS", reacts);
+	console.log("CHECKS", check);
 	return (
 		<div className='post' style={{ width: `${profile && "100%"}` }}>
 			<div className='post_header'>
@@ -110,7 +124,11 @@ export default function Post({ post, user, profile }) {
 				</div>
 			</div>
 			<div className='post_actions'>
-				<ReactPopup visible={visible} setVisible={setVisible} />
+				<ReactPopup
+					visible={visible}
+					setVisible={setVisible}
+					postId={post._id}
+				/>
 				<div
 					className='post_action hover1'
 					onMouseOver={() => {
@@ -124,7 +142,11 @@ export default function Post({ post, user, profile }) {
 						}, 500);
 					}}
 				>
-					<i className='like_icon'></i>
+					{check ? (
+						<img src={`../../../reacts/${check}.svg`} alt='' srcset='' className="small_react" style={{width: '18px'}} />
+					) : (
+						<i className='like_icon'></i>
+					)}
 					<span>Like</span>
 				</div>
 				<div className='post_action hover1'>
