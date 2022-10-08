@@ -32,13 +32,56 @@ exports.reactPost = async (req, res) => {
 
 exports.getReacts = async (req, res) => {
 	try {
-		const reacts = await React.find({ postRef: req.params.id });
+		const reactsArray = await React.find({ postRef: req.params.id });
 
 		// TWO METHODS OF FINDING THE REACT, check1 and check
 		// const check1 = reacts.find(
 		// 	(x) => x.reactBy.toString() === req.user.id
 		// )?.react;
 		// console.log(check1);
+
+		// Making the grp of same kind of reacts like:
+		// {
+		// sad: [{}, {}]
+		//}
+		const newReacts = reactsArray.reduce((group, react) => {
+			let key = react["react"];
+			group[key] = group[key] || [];
+			group[key].push(react);
+			return group;
+		}, {});
+
+		const reacts = [
+			{
+				react: "like",
+				count: newReacts.like ? newReacts.like.length : 0,
+			},
+			{
+				react: "haha",
+				count: newReacts.haha ? newReacts.haha.length : 0,
+			},
+			{
+				react: "wow",
+				count: newReacts.wow ? newReacts.wow.length : 0,
+			},
+			{
+				react: "sad",
+				count: newReacts.sad ? newReacts.sad.length : 0,
+			},
+			{
+				react: "angry",
+				count: newReacts.angry ? newReacts.angry.length : 0,
+			},
+			{
+				react: "love",
+				count: newReacts.love ? newReacts.love.length : 0,
+			},
+		];
+
+		reacts.sort((a, b) => {
+			return b.count - a.count;
+		});
+
 		const check = await React.findOne({
 			postRef: req.params.id,
 			reactBy: req.user.id,
@@ -48,6 +91,7 @@ exports.getReacts = async (req, res) => {
 		res.json({
 			reacts,
 			check: check?.react,
+			total: reactsArray.length
 		});
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
