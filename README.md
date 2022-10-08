@@ -12,6 +12,7 @@
 - Displaying profile posts on /profile section as well as on home page
 - Used react-easy-crop package for selecting the image and cropping it nicely.
 - Add friend, follow, unfollow, cancel friend request, displaying friends
+- User can react to each other profile posts, included 6 reactions majorly.
 
 ## Ways to start the app
 
