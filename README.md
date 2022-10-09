@@ -13,6 +13,7 @@
 - Used react-easy-crop package for selecting the image and cropping it nicely.
 - Add friend, follow, unfollow, cancel friend request, displaying friends
 - User can react to each other profile posts, included 6 reactions majorly.
+- Added comment functionality, user can comment with text and image on other/self users profile.
 
 ## Ways to start the app
 
