@@ -32,6 +32,7 @@ exports.comment = async (req, res) => {
 						comment: comment,
 						image: image,
 						commentBy: req.user.id,
+						commentAt: new Date(),
 					},
 				},
 			},
