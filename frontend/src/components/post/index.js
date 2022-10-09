@@ -52,7 +52,7 @@ export default function Post({ post, user, profile }) {
 			}
 		}
 	};
-	console.log("REACTS CHANGED", reacts);
+	// console.log("REACTS CHANGED", reacts);
 	return (
 		<div className='post' style={{ width: `${profile && "100%"}` }}>
 			<div className='post_header'>
@@ -153,11 +153,7 @@ export default function Post({ post, user, profile }) {
 								.map(
 									(react) =>
 										react.count > 0 && (
-											<img
-												src={`../../../reacts/${react.react}.svg`}
-												alt=''
-												srcset=''
-											/>
+											<img src={`../../../reacts/${react.react}.svg`} alt='' />
 										)
 								)}
 					</div>
@@ -192,7 +188,6 @@ export default function Post({ post, user, profile }) {
 						<img
 							src={`../../../reacts/${check}.svg`}
 							alt=''
-							srcset=''
 							className='small_react'
 							style={{ width: "18px" }}
 						/>
@@ -234,7 +229,7 @@ export default function Post({ post, user, profile }) {
 			</div>
 			<div className='comments_wrap'>
 				<div className='comments_order'></div>
-				<CreateComment user={user} />
+				<CreateComment user={user} postId={post._id} />
 			</div>
 			{showMenu && (
 				<PostMenu

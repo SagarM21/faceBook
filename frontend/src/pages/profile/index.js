@@ -105,7 +105,7 @@ export default function Profile({ setCreatePostVisible }) {
 	const getScroll = () => {
 		setScrollHeight(window.pageYOffset);
 	};
-	console.log(profile);
+	// console.log(profile);
 
 	return (
 		<div className='profile'>

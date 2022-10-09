@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function Friends({ friends }) {
-	console.log('friends', friends);
+	// console.log('friends', friends);
 	return (
 		<div className='profile_card'>
 			<div className='profile_card_header'>
@@ -25,7 +25,7 @@ export default function Friends({ friends }) {
 							className='profile_photo_card'
 							key={i}
 						>
-							<img src={friend?.picture} alt='' srcset='' />
+							<img src={friend?.picture} alt='' />
 							<span>
 								{friend?.first_name} {friend?.last_name}
 							</span>

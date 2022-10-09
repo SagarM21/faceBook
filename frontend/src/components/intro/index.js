@@ -28,7 +28,7 @@ export default function Intro({ detailss, visitor, setOtherName }) {
 	const [infos, setInfos] = useState(initial);
 	const [showBio, setShowBio] = useState(false);
 	const [max, setMax] = useState(infos?.bio ? 100 - infos?.bio.length : 100);
-	console.log(infos);
+	// console.log(infos);
 
 	const updateDetails = async () => {
 		try {
