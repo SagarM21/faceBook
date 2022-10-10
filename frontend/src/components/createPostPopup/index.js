@@ -10,7 +10,13 @@ import PulseLoader from "react-spinners/PulseLoader";
 import PostError from "./PostError";
 import { uploadImages } from "../../functions/uploadImages";
 import dataURItoBlob from "../../helpers/dataURItoBlob";
-export default function CreatePostPopup({ user, setCreatePostVisible }) {
+export default function CreatePostPopup({
+	user,
+	setCreatePostVisible,
+	posts,
+	dispatch,
+	profile,
+}) {
 	const popup = useRef(null);
 	const [text, setText] = useState("");
 	const [showPrev, setShowPrev] = useState(false);
@@ -37,7 +43,11 @@ export default function CreatePostPopup({ user, setCreatePostVisible }) {
 			);
 			setLoading(false);
 
-			if (response === "ok") {
+			if (response.status === "ok") {
+				dispatch({
+					type: profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",
+					payload: [response.data, ...posts],
+				});
 				setBackground("");
 				setText("");
 				setCreatePostVisible(false);
@@ -66,7 +76,11 @@ export default function CreatePostPopup({ user, setCreatePostVisible }) {
 			);
 			setLoading(false);
 			// checking with ok because I have returned ok in createPost function
-			if (res === "ok") {
+			if (res.status === "ok") {
+				dispatch({
+					type: profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",
+					payload: [res.data, ...posts],
+				});
 				setText("");
 				setImages("");
 				setCreatePostVisible(false);
@@ -85,7 +99,11 @@ export default function CreatePostPopup({ user, setCreatePostVisible }) {
 			);
 			setLoading(false);
 
-			if (response === "ok") {
+			if (response.status === "ok") {
+				dispatch({
+					type: profile ? "PROFILE_POSTS" : "POSTS_SUCCESS",
+					payload: [response.data, ...posts],
+				});
 				setBackground("");
 				setText("");
 				setCreatePostVisible(false);

@@ -56,6 +56,8 @@ const App = () => {
 				<CreatePostPopup
 					user={user}
 					setCreatePostVisible={setCreatePostVisible}
+					posts={posts}
+					dispatch={dispatch}
 				/>
 			)}
 			<Routes>
@@ -67,6 +69,7 @@ const App = () => {
 								setCreatePostVisible={setCreatePostVisible}
 								posts={posts}
 								loading={loading}
+								getAllPosts={getAllPosts}
 							/>
 						}
 						exact
@@ -74,12 +77,22 @@ const App = () => {
 					<Route path='/activate/:token' element={<Activate />} exact />
 					<Route
 						path='/profile'
-						element={<Profile setCreatePostVisible={setCreatePostVisible} />}
+						element={
+							<Profile
+								setCreatePostVisible={setCreatePostVisible}
+								getAllPosts={getAllPosts}
+							/>
+						}
 						exact
 					/>
 					<Route
 						path='/profile/:username'
-						element={<Profile setCreatePostVisible={setCreatePostVisible} />}
+						element={
+							<Profile
+								setCreatePostVisible={setCreatePostVisible}
+								getAllPosts={getAllPosts}
+							/>
+						}
 						exact
 					/>
 				</Route>

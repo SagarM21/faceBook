@@ -4,6 +4,8 @@ const User = require("../models/User");
 exports.createPost = async (req, res) => {
 	try {
 		const post = await new Post(req.body).save();
+		// populating so that as soon as the user posts, it will refresh on the spot
+		await post.populate("user", "first_name last_name picture username cover");
 		return res.json(post);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
