@@ -63,7 +63,11 @@ const App = () => {
 					<Route
 						path='/'
 						element={
-							<Home setCreatePostVisible={setCreatePostVisible} posts={posts} />
+							<Home
+								setCreatePostVisible={setCreatePostVisible}
+								posts={posts}
+								loading={loading}
+							/>
 						}
 						exact
 					/>
