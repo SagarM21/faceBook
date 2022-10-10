@@ -1,16 +1,16 @@
-import axios from "axios";
-import { useEffect, useReducer, useState } from "react";
-import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
-import CreatePostPopup from "./components/createPostPopup";
-import { postReducer } from "./functions/reducers";
-import Home from "./pages/home";
-import Activate from "./pages/home/activate";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
 import Reset from "./pages/reset";
-import LoggedInRoute from "./routes/LoggedInRoute";
-import NotLoggedInRoute from "./routes/NotLoggedInRoute";
+import CreatePostPopup from "./components/createPostPopup";
+import { useEffect, useReducer, useState } from "react";
+import axios from "axios";
+import { postReducer } from "./functions/reducers";
+import LoggedInRoute from "../src/routes/LoggedInRoute";
+import NotLoggedInRoute from "../src/routes/NotLoggedInRoute";
+import { useSelector } from "react-redux";
+import Home from "./pages/home";
+import Activate from "./pages/home/activate";
 
 const App = () => {
 	const [createPostVisible, setCreatePostVisible] = useState(false);
@@ -20,11 +20,9 @@ const App = () => {
 		posts: [],
 		error: "",
 	});
-
 	useEffect(() => {
 		getAllPosts();
 	}, []);
-
 	const getAllPosts = async () => {
 		try {
 			dispatch({
@@ -49,7 +47,6 @@ const App = () => {
 			});
 		}
 	};
-	// console.log(posts);
 	return (
 		<div>
 			{createPostVisible && (
@@ -62,19 +59,6 @@ const App = () => {
 			)}
 			<Routes>
 				<Route element={<LoggedInRoute />}>
-					<Route
-						path='/'
-						element={
-							<Home
-								setCreatePostVisible={setCreatePostVisible}
-								posts={posts}
-								loading={loading}
-								getAllPosts={getAllPosts}
-							/>
-						}
-						exact
-					/>
-					<Route path='/activate/:token' element={<Activate />} exact />
 					<Route
 						path='/profile'
 						element={
@@ -95,11 +79,24 @@ const App = () => {
 						}
 						exact
 					/>
+					<Route
+						path='/'
+						element={
+							<Home
+								setCreatePostVisible={setCreatePostVisible}
+								posts={posts}
+								loading={loading}
+								getAllPosts={getAllPosts}
+							/>
+						}
+						exact
+					/>
+					<Route path='/activate/:token' element={<Activate />} exact />
 				</Route>
 				<Route element={<NotLoggedInRoute />}>
 					<Route path='/login' element={<Login />} exact />
 				</Route>
-				<Route element={<Reset />} path='/reset' />
+				<Route path='/reset' element={<Reset />} />
 			</Routes>
 		</div>
 	);
