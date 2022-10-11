@@ -5,7 +5,7 @@
 - Forgot Password
 - Reset Password
 - Add/Upload Post in a grid manner
-- Like, Comment, Share functionality in post
+- Like, Comment, Share, Save, Unsave, download. delete functionality in post
 - Error handling
 - Uploading images to cloudinary
 - Profile section for users where they can see/update their images, and the posts they have made it till now.
