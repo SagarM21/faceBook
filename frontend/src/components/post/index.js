@@ -169,9 +169,13 @@ export default function Post({ post, user, profile }) {
 								})
 								.slice(0, 3)
 								.map(
-									(react) =>
+									(react, i) =>
 										react.count > 0 && (
-											<img src={`../../../reacts/${react.react}.svg`} alt='' />
+											<img
+												src={`../../../reacts/${react.react}.svg`}
+												alt=''
+												key={i}
+											/>
 										)
 								)}
 					</div>
