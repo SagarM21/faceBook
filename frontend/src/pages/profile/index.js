@@ -191,7 +191,7 @@ export default function Profile({getAllPosts}) {
 								<GridPosts />
 								<div className='posts'>
 									{profile.posts && profile.posts.length ? (
-										profile?.posts.map((post) => (
+										profile.posts.map((post) => (
 											<Post post={post} user={user} key={post._id} profile />
 										))
 									) : (

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const React = require("../models/React");
+const User = require("../models/User");
 
 exports.reactPost = async (req, res) => {
 	try {
@@ -78,17 +79,21 @@ exports.getReacts = async (req, res) => {
 			},
 		];
 
-		
 		const check = await React.findOne({
 			postRef: req.params.id,
 			reactBy: req.user.id,
 		});
+		const user = await User.findById(req.user.id);
+		const checkSaved = user?.savedPosts.find(
+			(x) => x.post.toString() === req.params.id
+		);
 		// console.log(check);
 		// console.log(reacts);
 		res.json({
 			reacts,
 			check: check?.react,
-			total: reactsArray.length
+			total: reactsArray.length,
+			checkSaved: checkSaved ? true : false,
 		});
 	} catch (error) {
 		return res.status(500).json({ message: error.message });

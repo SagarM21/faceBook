@@ -19,7 +19,7 @@ export default function Post({ post, user, profile }) {
 	const [total, setTotal] = useState(0);
 	const [comments, setComments] = useState([]);
 	const [count, setCount] = useState(1);
-
+	const [checkSaved, setCheckSaved] = useState();
 	useEffect(() => {
 		getPostReacts();
 	}, [post]);
@@ -33,6 +33,7 @@ export default function Post({ post, user, profile }) {
 		setReacts(res.reacts);
 		setCheck(res.check);
 		setTotal(res.total);
+		setCheckSaved(res.checkSaved);
 	};
 	// console.log("REACTS", reacts);
 	// console.log("CHECKS", check);
@@ -163,13 +164,9 @@ export default function Post({ post, user, profile }) {
 								})
 								.slice(0, 3)
 								.map(
-									(react, i) =>
+									(react) =>
 										react.count > 0 && (
-											<img
-												src={`../../../reacts/${react.react}.svg`}
-												alt=''
-												key={i}
-											/>
+											<img src={`../../../reacts/${react.react}.svg`} alt='' />
 										)
 								)}
 					</div>
@@ -270,6 +267,10 @@ export default function Post({ post, user, profile }) {
 					postUserId={post.user?._id}
 					imagesLength={post?.images?.length}
 					setShowMenu={setShowMenu}
+					postId={post._id}
+					token={user.token}
+					checkSaved={checkSaved}
+					setCheckSaved={setCheckSaved}
 				/>
 			)}
 		</div>
