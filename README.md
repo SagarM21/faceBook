@@ -6,7 +6,7 @@
 - Reset Password
 - Add/Upload Post in a grid manner
 - Like, Comment, Share, Save, Unsave, download. delete functionality in post
-- Error handling
+- Error handling, search functionality
 - Uploading images to cloudinary
 - Profile section for users where they can see/update their images, and the posts they have made it till now.
 - Displaying profile posts on /profile section as well as on home page

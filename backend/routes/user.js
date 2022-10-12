@@ -19,6 +19,7 @@ const {
 	acceptRequest,
 	unfriend,
 	deleteRequest,
+	search
 } = require("../controllers/user");
 const { authUser } = require("../middlewares/auth");
 const router = express.Router();
@@ -44,5 +45,6 @@ router.put("/acceptRequest/:id", authUser, acceptRequest);
 // Unfriend
 router.put("/unfriend/:id", authUser, unfriend);
 router.put("/deleteRequest/:id", authUser, deleteRequest);
+router.post("/search/:searchTerm", authUser, search);
 
 module.exports = router;
