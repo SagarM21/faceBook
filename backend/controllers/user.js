@@ -601,3 +601,13 @@ exports.addToSearchHistory = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
+exports.getSearchHistory = async (req, res) => {
+	try {
+		const results = await User.findById(req.user.id)
+			.select("search")
+			.populate("search.user", "first_name last_name username picture");
+		res.json(results.search);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
