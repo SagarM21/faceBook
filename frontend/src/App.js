@@ -11,6 +11,7 @@ import NotLoggedInRoute from "../src/routes/NotLoggedInRoute";
 import { useSelector } from "react-redux";
 import Home from "./pages/home";
 import Activate from "./pages/home/activate";
+import Friends from "./pages/friends";
 
 const App = () => {
 	const [createPostVisible, setCreatePostVisible] = useState(false);
@@ -73,6 +74,16 @@ const App = () => {
 						path='/profile/:username'
 						element={
 							<Profile
+								setCreatePostVisible={setCreatePostVisible}
+								getAllPosts={getAllPosts}
+							/>
+						}
+						exact
+					/>
+					<Route
+						path='/friends'
+						element={
+							<Friends
 								setCreatePostVisible={setCreatePostVisible}
 								getAllPosts={getAllPosts}
 							/>
