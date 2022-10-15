@@ -37,3 +37,7 @@ cd backend - `npm run server`
 ### Blogs that I preferred
 
 - https://medium.com/@nickroach_50526/ sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
+
+### Creds:
+- Mail: fbuser@gmail.com
+- Pass: 123456
