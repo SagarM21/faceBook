@@ -91,6 +91,16 @@ const App = () => {
 						exact
 					/>
 					<Route
+						path='/friends/:type'
+						element={
+							<Friends
+								setCreatePostVisible={setCreatePostVisible}
+								getAllPosts={getAllPosts}
+							/>
+						}
+						exact
+					/>
+					<Route
 						path='/'
 						element={
 							<Home
