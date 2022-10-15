@@ -13,6 +13,7 @@ const {
 	sendResetCodeEmail,
 } = require("../helpers/mailer");
 const Code = require("../models/Code");
+const mongoose = require("mongoose");
 const generateCode = require("../helpers/generateCode");
 exports.register = async (req, res) => {
 	try {
@@ -618,6 +619,26 @@ exports.removeFromSearch = async (req, res) => {
 			{ _id: req.user.id },
 			{ $pull: { search: { user: searchUser } } }
 		);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+};
+
+// FRIENDS PAGE
+exports.getFriendsPageInfos = async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id)
+			.select("friends requests")
+			.populate("friends", "first_name last_name picture username")
+			.populate("requests", "first_name last_name picture username");
+		const sentRequests = await User.find({
+			requests: mongoose.Types.ObjectId(req.user.id),
+		}).select("first_name last_name picture username");
+		res.json({
+			friends: user.friends,
+			requests: user.requests,
+			sentRequests,
+		});
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
