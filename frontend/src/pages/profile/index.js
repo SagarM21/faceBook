@@ -249,17 +249,52 @@ export default function Profile({ getAllPosts }) {
 							}`}
 						>
 							<div className='profile_left' ref={leftSide}>
-								<Intro
-									detailss={profile.details}
-									visitor={visitor}
-									setOtherName={setOtherName}
-								/>
-								<Photos
-									username={userName}
-									token={user.token}
-									photos={photos}
-								/>
-								<Friends friends={profile.friends} />
+								{loading ? (
+									<>
+										<div className='profile_card'>
+											<div className='profile_card_header'>Intro</div>
+											<div className='skeleton_loader'>
+												<HashLoader color='#1876f2' />
+											</div>
+										</div>
+										<div className='profile_card'>
+											<div className='profile_card_header'>
+												Photos
+												<div className='profile_header_link'>
+													See all photos
+												</div>
+											</div>
+											<div className='skeleton_loader'>
+												<HashLoader color='#1876f2' />
+											</div>
+										</div>
+										<div className='profile_card'>
+											<div className='profile_card_header'>
+												Friends
+												<div className='profile_header_link'>
+													See all friends
+												</div>
+											</div>
+											<div className='skeleton_loader'>
+												<HashLoader color='#1876f2' />
+											</div>
+										</div>
+									</>
+								) : (
+									<>
+										<Intro
+											detailss={profile.details}
+											visitor={visitor}
+											setOtherName={setOtherName}
+										/>
+										<Photos
+											username={userName}
+											token={user.token}
+											photos={photos}
+										/>
+										<Friends friends={profile.friends} />
+									</>
+								)}
 								<div className='relative_fb_copyright'>
 									<Link to='/'>Privacy </Link>
 									<span>. </span>
@@ -286,15 +321,21 @@ export default function Profile({ getAllPosts }) {
 									/>
 								)}
 								<GridPosts />
-								<div className='posts'>
-									{profile.posts && profile.posts.length ? (
-										profile.posts.map((post) => (
-											<Post post={post} user={user} key={post._id} profile />
-										))
-									) : (
-										<div className='no_posts'>No posts available</div>
-									)}
-								</div>
+								{loading ? (
+									<div className='skeleton_loader'>
+										<HashLoader color='#1876f2' />
+									</div>
+								) : (
+									<div className='posts'>
+										{profile.posts && profile.posts.length ? (
+											profile.posts.map((post) => (
+												<Post post={post} user={user} key={post._id} profile />
+											))
+										) : (
+											<div className='no_posts'>No posts available</div>
+										)}
+									</div>
+								)}
 							</div>
 						</div>
 					</div>

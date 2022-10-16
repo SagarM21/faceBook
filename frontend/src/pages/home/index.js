@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { HashLoader } from "react-spinners";
 import CreatePost from "../../components/createPost";
 import Header from "../../components/header";
 import LeftHome from "../../components/home/left";
@@ -28,11 +29,17 @@ export default function Home({
 				<Stories />
 				{user.verified === false && <SendVerification user={user} />}
 				<CreatePost user={user} setCreatePostVisible={setCreatePostVisible} />
-				<div className='posts'>
-					{posts.map((post, i) => (
-						<Post key={i} post={post} user={user} />
-					))}
-				</div>
+				{loading ? (
+					<div className='skeleton_loader'>
+						<HashLoader color='#1876f2' />
+					</div>
+				) : (
+					<div className='posts'>
+						{posts.map((post, i) => (
+							<Post key={i} post={post} user={user} />
+						))}
+					</div>
+				)}
 			</div>
 			<RightHome user={user} />
 		</div>
