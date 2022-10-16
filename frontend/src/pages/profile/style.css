@@ -421,6 +421,9 @@
 	color: var(--blue-color);
 	border-bottom: 3px solid var(--blue-color);
 }
+.friends_menu_wrap {
+	position: relative;
+}
 
 /*-----profile card--------*/
 @media (max-width: 900px) {
