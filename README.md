@@ -10,11 +10,12 @@
 - Uploading images to cloudinary
 - Profile section for users where they can see/update their images, and the posts they have made it till now.
 - Displaying profile posts on /profile section as well as on home page
-- Friends page - 
+- Friends page -
 - Used react-easy-crop package for selecting the image and cropping it nicely.
 - Add friend, follow, unfollow, cancel friend request, displaying friends.
 - User can react to each other profile posts, included 6 reactions majorly.
 - Added comment functionality, user can comment with text and image on other/self users profile.
+- Added dark mode, and loader(react-loading-skeleton, fully customizable)
 
 ## Ways to start the app
 
@@ -39,5 +40,6 @@ cd backend - `npm run server`
 - https://medium.com/@nickroach_50526/ sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
 
 ### Creds:
+
 - Mail: fbuser@gmail.com
 - Pass: 123456
