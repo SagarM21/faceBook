@@ -15,7 +15,7 @@
 - Add friend, follow, unfollow, cancel friend request, displaying friends.
 - User can react to each other profile posts, included 6 reactions majorly.
 - Added comment functionality, user can comment with text and image on other/self users profile.
-- Added dark mode, and loader(react-loading-skeleton, fully customizable)
+- Added dark mode, and loader(react-loading-skeleton, fully customizable), hashLoader from react-spinner
 
 ## Ways to start the app
 
