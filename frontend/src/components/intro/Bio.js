@@ -14,10 +14,10 @@ export default function Bio({
 		<div className='add_bio_wrap'>
 			{rel ? (
 				<select
-					name={name}
-					value={infos?.relationship}
-					onChange={handleChange}
 					className='select_rel'
+					name={name}
+					value={infos.relationship}
+					onChange={handleChange}
 				>
 					<option value='Single'>Single</option>
 					<option value='In a relationship'>In a relationship</option>

@@ -4,7 +4,6 @@ import "./style.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import EditDetails from "./EditDetails";
-
 export default function Intro({ detailss, visitor, setOtherName }) {
 	const { user } = useSelector((state) => ({ ...state }));
 	const [details, setDetails] = useState();
@@ -28,7 +27,6 @@ export default function Intro({ detailss, visitor, setOtherName }) {
 	const [infos, setInfos] = useState(initial);
 	const [showBio, setShowBio] = useState(false);
 	const [max, setMax] = useState(infos?.bio ? 100 - infos?.bio.length : 100);
-	// console.log(infos);
 
 	const updateDetails = async () => {
 		try {
@@ -51,8 +49,6 @@ export default function Intro({ detailss, visitor, setOtherName }) {
 			console.log(error.response.data.message);
 		}
 	};
-	// console.log(details);
-
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setInfos({ ...infos, [name]: value });
@@ -170,6 +166,7 @@ export default function Intro({ detailss, visitor, setOtherName }) {
 					setVisible={setVisible}
 				/>
 			)}
+
 			{!visitor && (
 				<button className='gray_btn hover1 w100'>Add Hobbies</button>
 			)}

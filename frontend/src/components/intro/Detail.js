@@ -17,7 +17,7 @@ export default function Detail({
 		<div>
 			<div className='add_details_flex ' onClick={() => setShow(true)}>
 				{value ? (
-					<div className='info_profile'>
+					<div className='info_profile '>
 						<img src={`../../../icons/${img}.png`} alt='' />
 						{value}
 						<i className='edit_icon'></i>
@@ -36,8 +36,8 @@ export default function Detail({
 					handleChange={handleChange}
 					updateDetails={updateDetails}
 					infos={infos}
-					setShow={setShow}
 					detail
+					setShow={setShow}
 					rel={rel}
 				/>
 			)}

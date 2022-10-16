@@ -186,6 +186,7 @@ export default function Profile({ getAllPosts }) {
 														width='32px'
 														containerClassName='avatar-skeleton'
 														style={{ transform: `translateX(${-i * 7}px)` }}
+														key={i}
 													/>
 												)
 											)}

@@ -23,7 +23,6 @@ export default function UpdateProfilePicture({
 	const slider = useRef(null);
 	const { user } = useSelector((state) => ({ ...state }));
 	const [loading, setLoading] = useState(false);
-
 	const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
 		setCroppedAreaPixels(croppedAreaPixels);
 	}, []);
@@ -75,8 +74,7 @@ export default function UpdateProfilePicture({
 					user.id,
 					user.token
 				);
-				console.log(new_post);
-				if (new_post === "ok") {
+				if (new_post.status === "ok") {
 					setLoading(false);
 					setImage("");
 					pRef.current.style.backgroundImage = `url(${res[0].url})`;
@@ -136,7 +134,6 @@ export default function UpdateProfilePicture({
 						showGrid={false}
 					/>
 				</div>
-
 				<div className='slider'>
 					<div className='slider_circle hover1' onClick={() => zoomOut()}>
 						<i className='minus_icon'></i>
