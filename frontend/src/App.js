@@ -49,7 +49,7 @@ const App = () => {
 		}
 	};
 	return (
-		<div>
+		<div className="dark">
 			{createPostVisible && (
 				<CreatePostPopup
 					user={user}
